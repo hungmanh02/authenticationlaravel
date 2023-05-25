@@ -8,14 +8,19 @@
                 <div class="card-header">Đăng nhập</div>
 
                 <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger text-center">
+                            Đã có lỗi xảy ra. Vui lòng kiểm tra dữ liệu bên dưới
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Địa chỉ mail</label>
+                            <label for="text" class="col-md-4 col-form-label text-md-end">Số điện thoại</label>
 
                             <div class="col-md-6">
-                                <input id="email" placeholder="Địa chỉ mail ..." type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="text" placeholder="Số điện thoạil ..." type="text" class="form-control @error('email') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -29,7 +34,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">Mật khẩu</label>
 
                             <div class="col-md-6">
-                                <input id="password" placeholder="Mật khẩu ..." type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input id="password" placeholder="Mật khẩu ..." type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">

@@ -17,4 +17,28 @@
 - cài auth php artisan ui:auth
 - cài đặt migration 
 * Thiết lập Path Controller Trong Authentication
+* Thiết kế giao diện lại việt hóa các tên
+- việt hóa các validation và các alert
+- khi đăng nhập không thành công
+1. sửa ở phần lang/en
+    'failed' => 'Thông tin đăng nhập không hợp lệ.',
+    'password' => 'Mật khẩu được cung cấp không chính xác.',
+    'throttle' => 'Quá nhiều lần thử đăng nhập. Vui lòng thử lại sau :seconds giây.',
+2. ghi đè lại fail đăng nhập
+- sử dụng trong Auth loginController
+- use Illuminate\Validation\ValidationException;
+- protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => ['Tên đăng nhập hoặc mật khẩu không hợp lệ.'],
+        ]);
+    }
+- đăng nhập bằng số điện thoại.
+-- tự thêm tay cột sđt trong table users.
+-- public function username(){
+        return 'phone'; 
+    }
+-- sủa lại validation và views login lại thành đăng nhập bằng số điện thoại
+
+
 
