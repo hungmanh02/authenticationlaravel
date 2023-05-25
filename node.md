@@ -55,7 +55,18 @@
         return $dataArr;
         // return $request->only($username, 'password');
     }
-
+* sửa form đăng ký, validation form 
+- quên mật khẩu
+-- cấu hình mail trong .env
+-- để cấu hình thì sử dụng gmail lấy mật khẩu ứng dụng trong xác minh 2 bước trong bảo mật của gmail
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME=domanh462@gmail.com
+MAIL_PASSWORD=jnnjilhhxniwwvdy
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS=domanh462@gmail.com
+MAIL_FROM_NAME="${APP_NAME}"
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -19,4 +20,14 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+    protected function validateEmail(Request $request)
+    {
+        $request->validate(
+            ['email' => 'required|email'],
+            [
+                'email.required'=>'Email bắt buộc phải nhập.',
+                'email.email'=>'Email không đúng định dạng.',
+            ]
+        );
+    }
 }
