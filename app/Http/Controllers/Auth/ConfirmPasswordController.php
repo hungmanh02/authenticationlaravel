@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class ConfirmPasswordController extends Controller
 {
@@ -36,5 +41,35 @@ class ConfirmPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+    public function confirm(Request $request)
+    {
+        $request->validate($this->rules(), $this->validationErrorMessages());
+
+        $this->resetPasswordConfirmationTimeout($request);
+
+        // xử lý gửi mail khi confirm thành công
+
+        // dd($request->email);
+        $email=Auth::user()->email;
+        $name=Auth::user()->name;
+        $content='Chào '.$name.'<br/>';
+        $content.='Bạn vừa xác nhận mật khẩu thành công.';
+
+          Mail::raw('', function (Message $message) use ($email){
+            $message->to($email)
+            ->subject('Xác nhận mật khẩu thành công');
+        });
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 204)
+                    : redirect()->intended($this->redirectPath());
+    }
+    protected function validationErrorMessages()
+    {
+        return [
+            'password.required'=>'Mật khẩu bắt buộc phải nhập.',
+            'password.current_password'=>'Mật khẩu không chính xác.',
+        ];
     }
 }

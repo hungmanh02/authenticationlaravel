@@ -68,5 +68,34 @@ MAIL_ENCRYPTION=ssl
 MAIL_FROM_ADDRESS=domanh462@gmail.com
 MAIL_FROM_NAME="${APP_NAME}"
 
+* thiết lập xác nhận mật khẩu và gửi email thông báo (Confirmed pasword)
+-- xử lý gửi mail khi confirm thành công
+-- sử dụng mail raw laravel
+ public function confirm(Request $request)
+    {
+        $request->validate($this->rules(), $this->validationErrorMessages());
+
+        $this->resetPasswordConfirmationTimeout($request);
+
+        // xử lý gửi mail khi confirm thành công
+
+        // dd($request->email);
+        $email=Auth::user()->email;
+        $name=Auth::user()->name;
+        $content='Chào '.$name.'<br/>';
+        $content.='Bạn vừa xác nhận mật khẩu thành công.';
+
+          Mail::raw('', function (Message $message) use ($email){
+            $message->to($email)
+            ->subject('Xác nhận mật khẩu thành công');
+        });
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 204)
+                    : redirect()->intended($this->redirectPath());
+    }
+
+
+
 
 
