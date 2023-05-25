@@ -39,6 +39,23 @@
         return 'phone'; 
     }
 -- sủa lại validation và views login lại thành đăng nhập bằng số điện thoại
+* đăng nhập bằng nhiều cách, số điện thoại hoặc email
+-- protected function credentials(Request $request)
+    {
+        if(filter_var($request->phone,FILTER_VALIDATE_EMAIL)){
+            $fielDb='email';
+        }else{
+
+            $fielDb='phone';
+        }
+        $dataArr= [
+            $fielDb =>$request->phone,
+            'password' => $request->password
+        ];
+        return $dataArr;
+        // return $request->only($username, 'password');
+    }
+
 
 
 

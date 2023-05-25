@@ -17,12 +17,12 @@
                         @csrf
 
                         <div class="row mb-3">
-                            <label for="text" class="col-md-4 col-form-label text-md-end">Số điện thoại</label>
+                            <label for="text" class="col-md-4 col-form-label text-md-end">Tên đăng nhập</label>
 
                             <div class="col-md-6">
-                                <input id="text" placeholder="Số điện thoạil ..." type="text" class="form-control @error('email') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autocomplete="email" autofocus>
+                                <input id="text" placeholder="Email hoặc số điện thoại ..." type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" autofocus>
 
-                                @error('email')
+                                @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

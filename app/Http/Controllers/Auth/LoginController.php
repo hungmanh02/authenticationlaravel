@@ -80,5 +80,20 @@ class LoginController extends Controller
     public function username(){
         return 'phone';
     }
+    protected function credentials(Request $request)
+    {
+        if(filter_var($request->phone,FILTER_VALIDATE_EMAIL)){
+            $fielDb='email';
+        }else{
+
+            $fielDb='phone';
+        }
+        $dataArr= [
+            $fielDb =>$request->phone,
+            'password' => $request->password
+        ];
+        return $dataArr;
+        // return $request->only($username, 'password');
+    }
 
 }
