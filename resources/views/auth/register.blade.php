@@ -18,6 +18,7 @@
                             {{session('msg')}}
                         </div>
                     @endif
+                    //commit số 75
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
