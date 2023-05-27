@@ -96,6 +96,9 @@ MAIL_FROM_NAME="${APP_NAME}"
     }
 * truy xuất thông tin Middleware các thao tác khác.
 - middleware:
+* xây dựng chức năng xác thực email khi đăng ký tài khoản
+- trong Model User implements MustVerifyEmail
+- use thêm Notifiable
 
 
 

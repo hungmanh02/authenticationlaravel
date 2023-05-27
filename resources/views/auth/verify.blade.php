@@ -14,8 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
+                    Trước khi tiếp tục, vui lòng kiểm tra email của bạn để biết liên kết xác minh.
+                    Nếu bạn không nhận được email,
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
                         <button type="submit" class="btn btn-link p-0 m-0 align-baseline">Bấm vào đây để yêu cầu khác </button>.
