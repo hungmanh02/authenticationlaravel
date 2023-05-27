@@ -1,6 +1,6 @@
 # new project
 - composer create-project laravel/laravel:^9.0 authenticationlaravel
-#Modules 6
+#Modules 6 Authentication
 * Cấu hình và cài đặt Authentication Laravel
 - model, view, controller được tạo sẵn trong laravel khi cài đặt Auth
 - mặc định 1 Eloquent Model app\User.php được tạo ra , được sử dụng mặc định trong file cấu hình config/auth.php
@@ -99,7 +99,13 @@ MAIL_FROM_NAME="${APP_NAME}"
 * xây dựng chức năng xác thực email khi đăng ký tài khoản
 - trong Model User implements MustVerifyEmail
 - use thêm Notifiable
-
+- tạo route 
+#Modules 7 Multiple Authentication trong Laravel
+* tạo migrattions-Seed-Model-Custom Guards
+- tạo migration create_doctors_table
+- seed database
+* viết chức năng đăng nhập
+- 
 
 
 

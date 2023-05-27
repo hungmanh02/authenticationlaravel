@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Doctors\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +43,11 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+Route::prefix('doctors')->name('doctors.')->group(function(){
+    Route::get('/',function(){
+        return "Dành cho doctors";
+    });
+    Route::get('login',[LoginController::class,'login'])->name('login');
+    Route::post('login',[LoginController::class,'postlogin'])->name('login');
+});
