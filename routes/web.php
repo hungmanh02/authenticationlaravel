@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Doctors\Auth\ForgotPasswordController;
 use App\Http\Controllers\Doctors\Auth\LoginController;
+use App\Http\Controllers\Doctors\IndexController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -45,9 +47,13 @@ Route::post('/email/verification-notification', function (Request $request) {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
 Route::prefix('doctors')->name('doctors.')->group(function(){
-    Route::get('/',function(){
-        return "Dành cho doctors";
-    });
-    Route::get('login',[LoginController::class,'login'])->name('login');
+    Route::get('/',[IndexController::class,'index'])->middleware('auth:doctor');
+    Route::get('login',[LoginController::class,'login'])->name('login')->middleware('guest:doctor');
     Route::post('login',[LoginController::class,'postlogin'])->name('login');
+    Route::post('/logout',[LoginController::class,'logout'])->middleware('auth:doctor')->name('logout');
+    Route::get('forgot-password',[ForgotPasswordController::class,'getForgotPassword'])->name('forgot-password')->middleware('guest:doctor');
+    Route::post('forgot-password',[ForgotPasswordController::class,'sendResetLinkEmail'])->middleware('guest:doctor');
+    Route::get('reset-password/{token}',function(){
+        return 'reset-password';
+    })->name('reset-password');
 });

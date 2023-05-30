@@ -30,4 +30,9 @@ class LoginController extends Controller
         return back()->with('msg','Tài khoản chưa được kích hoạt');
 
     }
+    public function logout(){
+        Auth::guard('doctor')->logout();
+        return redirect()->route('doctors.login');
+    }
+
 }

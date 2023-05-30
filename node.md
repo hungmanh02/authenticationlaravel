@@ -105,7 +105,10 @@ MAIL_FROM_NAME="${APP_NAME}"
 - tạo migration create_doctors_table
 - seed database
 * viết chức năng đăng nhập
-- 
+* làm việc với middleware trong Custom Guard
+* viết chức năng đăng xuất trong Custom Guard
+* viết chức năng quên mật khẩu trong Custom Guard
+
 
 
 

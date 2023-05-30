@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('doctors.layouts.app')
 
 @section('content')
 <div class="container">
@@ -67,8 +67,8 @@
                                     Đăng nhập
                                 </button>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                @if (Route::has('doctors.forgot-password'))
+                                    <a class="btn btn-link" href="{{ route('doctors.forgot-password') }}">
                                         Quên mật khẩu
                                     </a>
                                 @endif
