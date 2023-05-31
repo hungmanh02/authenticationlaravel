@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Doctors\Auth\ForgotPasswordController;
 use App\Http\Controllers\Doctors\Auth\LoginController;
+use App\Http\Controllers\Doctors\Auth\ResetPassWordController;
 use App\Http\Controllers\Doctors\IndexController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -53,7 +54,6 @@ Route::prefix('doctors')->name('doctors.')->group(function(){
     Route::post('/logout',[LoginController::class,'logout'])->middleware('auth:doctor')->name('logout');
     Route::get('forgot-password',[ForgotPasswordController::class,'getForgotPassword'])->name('forgot-password')->middleware('guest:doctor');
     Route::post('forgot-password',[ForgotPasswordController::class,'sendResetLinkEmail'])->middleware('guest:doctor');
-    Route::get('reset-password/{token}',function(){
-        return 'reset-password';
-    })->name('reset-password');
+    Route::get('reset-password/{token}',[ResetPassWordController::class,'showResetForm'])->name('reset-password');
+    Route::post('update-password',[ResetPassWordController::class,'reset'])->name('update-password');
 });
