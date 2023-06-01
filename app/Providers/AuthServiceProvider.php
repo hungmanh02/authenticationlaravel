@@ -35,15 +35,15 @@ class AuthServiceProvider extends ServiceProvider
             return route('doctors.reset-password',['token'=>$token]).'?email='.$doctor->email;
         });
         // định nghĩa gate
-        // Gate::define('posts.add',function (User $user){
-        //     // dd($user);
-        //     return true;
-        // });
+        Gate::define('posts.add',function (User $user){
+            // dd($user);
+            return true;
+        });
+        Gate::define('posts.update',function(User $user,Post $post){
+            // dd($post);
+            return $user->id==$post->user_id;
+        });
         // sử dụng policy
-            Gate::define('posts.add',[PostPolicy::class,'add']);
-            Gate::define('posts.update',function(User $user,Post $post){
-                // dd($post);
-                return $user->id==$post->user_id;
-            });
+        // Gate::define('posts.add',[PostPolicy::class,'add']);
     }
 }

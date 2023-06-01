@@ -116,8 +116,12 @@ MAIL_FROM_NAME="${APP_NAME}"
 - viết route cho post
 - xử lý gate
 - tạo policy php artisan make:policy PostPolicy
-- 
-
+* kiểm tra phân quyền gate và policy
+- kiểm tra quyền của 1 user nào đó
+- kiểm tra quyền bằng middleware
+- thay can cho middleware 
+-- Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->middleware('can:posts.update,post'); 
+-- Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->can('posts.update','post); 
 
 
 

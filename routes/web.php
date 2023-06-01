@@ -35,9 +35,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth','verified')->group(fun
     });
     Route::prefix('posts')->name('posts.')->group(function(){
         Route::get('/',[PostController::class,'index'])->name('index');
-        Route::get('/add',[PostController::class,'add'])->name('add');
+        Route::get('/add',[PostController::class,'add'])->name('add')->middleware('can:posts.add');
         Route::get('/show/{id}',[PostController::class,'show'])->name('show');
-        Route::get('/edit/{id}',[PostController::class,'edit'])->name('edit');
+        Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->middleware('can:posts.update,post');
         Route::get('/delete/{id}',[PostController::class,'index'])->name('delete');
     });
 
