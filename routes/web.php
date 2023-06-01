@@ -67,4 +67,6 @@ Route::prefix('doctors')->name('doctors.')->group(function(){
     Route::post('forgot-password',[ForgotPasswordController::class,'sendResetLinkEmail'])->middleware('guest:doctor');
     Route::get('reset-password/{token}',[ResetPasswordController::class,'showResetForm'])->name('reset-password');
     Route::post('update-password',[ResetPasswordController::class,'reset'])->name('update-password');
+    Route::get('reset-password/{token}',[ResetPassWordController::class,'showResetForm'])->name('reset-password');
+    Route::post('update-password',[ResetPassWordController::class,'reset'])->name('update-password');
 });
