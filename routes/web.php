@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Doctors\Auth\ForgotPasswordController;
 use App\Http\Controllers\Doctors\Auth\LoginController;
+use App\Http\Controllers\Doctors\Auth\ResetPasswordController;
 use App\Http\Controllers\Doctors\IndexController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -26,8 +28,18 @@ Route::get('/', function () {
 
 Auth::routes();
 // Route::get('/admin',[AdminController::class,'index']);
-Route::prefix('admin')->middleware('auth','verified')->group(function (){
+Route::prefix('admin')->name('admin.')->middleware('auth','verified')->group(function (){
     Route::get('/',[AdminController::class,'index']);
+    Route::get('product',function(){
+        return "products";
+    });
+    Route::prefix('posts')->name('posts.')->group(function(){
+        Route::get('/',[PostController::class,'index'])->name('index');
+        Route::get('/add',[PostController::class,'add'])->name('add');
+        Route::get('/show/{id}',[PostController::class,'show'])->name('show');
+        Route::get('/edit/{id}',[PostController::class,'edit'])->name('edit');
+        Route::get('/delete/{id}',[PostController::class,'index'])->name('delete');
+    });
 
 
 
@@ -53,7 +65,6 @@ Route::prefix('doctors')->name('doctors.')->group(function(){
     Route::post('/logout',[LoginController::class,'logout'])->middleware('auth:doctor')->name('logout');
     Route::get('forgot-password',[ForgotPasswordController::class,'getForgotPassword'])->name('forgot-password')->middleware('guest:doctor');
     Route::post('forgot-password',[ForgotPasswordController::class,'sendResetLinkEmail'])->middleware('guest:doctor');
-    Route::get('reset-password/{token}',function(){
-        return 'reset-password';
-    })->name('reset-password');
+    Route::get('reset-password/{token}',[ResetPasswordController::class,'showResetForm'])->name('reset-password');
+    Route::post('update-password',[ResetPasswordController::class,'reset'])->name('update-password');
 });

@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header"Đăng ký</div>
 
+                    //commit số 75
                 <div class="card-body">
                     @if ($errors->any())
                         <div class="alert alert-danger text-center">
@@ -18,7 +19,6 @@
                             {{session('msg')}}
                         </div>
                     @endif
-                    //commit số 75
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

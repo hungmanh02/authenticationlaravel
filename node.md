@@ -107,7 +107,16 @@ MAIL_FROM_NAME="${APP_NAME}"
 * viết chức năng đăng nhập
 * làm việc với middleware trong Custom Guard
 * viết chức năng đăng xuất trong Custom Guard
-* viết chức năng quên mật khẩu trong Custom Guard
+* viết chức năng quên mật khẩu trong Custom Guard P1
+# Modules 8 Authozication
+- user chỉ được sửa bài đăng của user đó đăng
+* Gates giống như route kết nối vơi controller, Police kết nối các logic với model
+* Định nghĩa gate và policy
+* Tạo 1 controller PostController
+- viết route cho post
+- xử lý gate
+- tạo policy php artisan make:policy PostPolicy
+- 
 
 
 
