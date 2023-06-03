@@ -28,7 +28,7 @@ Route::get('/', function () {
 
 Auth::routes();
 // Route::get('/admin',[AdminController::class,'index']);
-Route::prefix('admin')->name('admin.')->middleware('auth','verified')->group(function (){
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
     Route::get('/',[AdminController::class,'index']);
     Route::get('product',function(){
         return "products";

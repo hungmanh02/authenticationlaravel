@@ -121,7 +121,41 @@ MAIL_FROM_NAME="${APP_NAME}"
 - kiểm tra quyền bằng middleware
 - thay can cho middleware 
 -- Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->middleware('can:posts.update,post'); 
--- Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->can('posts.update','post); 
+-- Route::post('/edit/{post}',[PostController::class,'edit'])->name('edit')->can('posts.update','post); 
+* phân tích :
+1. Danh sách modules:
+- Quản lý người dùng
+- Quản lý người dùng người dùng
+- Quản lý bài viết
+2. Phân quyền
+- tạo 1 nhóm người dùng => phân quyền cho nhóm
+- thêm user cho nhóm => user có phần trong nhóm đó
+- Các quyền :
+01: Module bài viết
+
+ + Xem danh sách bài viết
+ + Thêm bài viết
+ + Sửa bài viết: Bài viết của ai thì sửa của người đó
+ + Xóa bài viết: Bài viết của ai thì xóa người đó
+
+02: Module nhóm người dùng
+ + Xem danh sách nhóm
+ + Thêm nhóm
+ + Sửa nhóm
+ + Xóa nhóm
+ + Phân quyền
+
+03: Module người dùng
+ + Xem danh sách người dùng
+ + Thêm người dùng
+ + Sửa người dùng
+ + Xóa người dùng
+ + Phân quyền 
+
+* thiết kế database :
+- tạo dữ liệu giả cho các table
+- thiết kế giao diện dashboard
+- 
 
 
 
