@@ -13,8 +13,8 @@ class PostController extends Controller
     public function index(){
         return view('admin.posts.list');
     }
-    public function show($id){
-        return "Chi tiết bài viết".$id;
+    public function show(Post $post){
+        return "Chi tiết bài viết".$post;
     }
     public function add(){
         $user=User::find(2);
@@ -30,6 +30,12 @@ class PostController extends Controller
         //     return 'Không có quyền thêm bài viết';
         // }
         // return "Thêm bài viết";
+    }
+    public function postAdd(){
+
+    }
+    public function postEdit(Post $post){
+        return $post;
     }
     public function edit(Post $post){
         // $user=User::find(2);

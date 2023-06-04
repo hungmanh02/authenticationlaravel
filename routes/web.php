@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Doctors\Auth\ForgotPasswordController;
 use App\Http\Controllers\Doctors\Auth\LoginController;
@@ -30,14 +32,28 @@ Auth::routes();
 // Route::get('/admin',[AdminController::class,'index']);
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
     Route::get('/',[AdminController::class,'index']);
-    Route::get('product',function(){
-        return "products";
+    // users
+    Route::prefix('users')->name('users.')->group(function(){
+        Route::get('/',[UsersController::class,'index'])->name('index');
+        Route::get('/add',[UsersController::class,'add'])->name('add');
+        Route::get('/show/{user}',[UsersController::class,'show'])->name('show');
+        Route::get('/edit/{user}',[UsersController::class,'edit'])->name('edit');
+        Route::get('/delete/{user}',[UsersController::class,'index'])->name('delete');
     });
+    //groups
+    Route::prefix('groups')->name('groups.')->group(function(){
+        Route::get('/',[GroupController::class,'index'])->name('index');
+        Route::get('/add',[GroupController::class,'add'])->name('add');
+        Route::get('/show/{group}',[GroupController::class,'show'])->name('show');
+        Route::get('/edit/{group}',[GroupController::class,'edit'])->name('edit');
+        Route::get('/delete/{group}',[GroupController::class,'index'])->name('delete');
+    });
+    //posts
     Route::prefix('posts')->name('posts.')->group(function(){
         Route::get('/',[PostController::class,'index'])->name('index');
-        Route::get('/add',[PostController::class,'add'])->name('add')->middleware('can:posts.add');
+        Route::get('/add',[PostController::class,'add'])->name('add');//->middleware('can:posts.add')
         Route::get('/show/{id}',[PostController::class,'show'])->name('show');
-        Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->middleware('can:posts.update,post');
+        Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit');//->middleware('can:posts.update,post')
         Route::get('/delete/{id}',[PostController::class,'index'])->name('delete');
     });
 
@@ -56,7 +72,6 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
 Route::prefix('doctors')->name('doctors.')->group(function(){
     Route::get('/',[IndexController::class,'index'])->middleware('auth:doctor');
