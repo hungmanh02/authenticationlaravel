@@ -40,15 +40,17 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
         Route::get('/show/{user}',[UsersController::class,'show'])->name('show');
         Route::get('/edit/{user}',[UsersController::class,'edit'])->name('edit');
         Route::post('/edit/{user}',[UsersController::class,'postEdit'])->name('update');
-        Route::get('/delete/{user}',[UsersController::class,'index'])->name('delete');
+        Route::get('/delete/{user}',[UsersController::class,'delete'])->name('delete');
     });
     //groups
     Route::prefix('groups')->name('groups.')->group(function(){
         Route::get('/',[GroupController::class,'index'])->name('index');
         Route::get('/add',[GroupController::class,'add'])->name('add');
+        Route::post('/add',[GroupController::class,'postadd'])->name('add');
         Route::get('/show/{group}',[GroupController::class,'show'])->name('show');
         Route::get('/edit/{group}',[GroupController::class,'edit'])->name('edit');
-        Route::get('/delete/{group}',[GroupController::class,'index'])->name('delete');
+        Route::post('/edit/{group}',[GroupController::class,'postEdit'])->name('update');
+        Route::get('/delete/{group}',[GroupController::class,'delete'])->name('delete');
     });
     //posts
     Route::prefix('posts')->name('posts.')->group(function(){

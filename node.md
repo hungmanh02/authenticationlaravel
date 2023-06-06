@@ -155,6 +155,13 @@ MAIL_FROM_NAME="${APP_NAME}"
 * thiết kế database :
 - tạo dữ liệu giả cho các table
 - thiết kế giao diện dashboard
+- list users
+- thêm users
+- cập nhật, xóa users
+
+* groups
+- danh sách groups
+- phân quyền và CRUD trong groups
 - 
 
 

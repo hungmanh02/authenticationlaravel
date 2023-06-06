@@ -4,6 +4,11 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Thêm người dùng</h1>
 </div>
+@if ($errors->any())
+<div class="alert alert-danger text-center">
+    Vui lòng kiểm tra dữ liệu nhập vào
+</div>
+@endif
 <form action="{{route('admin.users.add')}}" method="POST">
     @csrf
     <div class="row">

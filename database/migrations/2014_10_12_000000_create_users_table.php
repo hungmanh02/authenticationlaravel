@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->integer('phone');
             $table->integer('group_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -11,17 +11,16 @@
     @endif
     <div>
         <p>
-            <a href="{{route('admin.users.add')}}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{route('admin.groups.add')}}" class="btn btn-primary">Thêm mới</a>
         </p>
     </div>
     <table class="table table-bordered">
         <thead>
           <tr>
-            <th >#</th>
-            <th >Name</th>
-            <th >Email</th>
-            <th >Phone</th>
-            <th >Nhóm</th>
+            <th ># </th>
+            <th >Tên</th>
+            <th with="10%">Người đăng</th>
+            <th with="15%" >Phân quyền</th>
             <th width="5%" >Sửa</th>
             <th width="5%" >Xóa</th>
           </tr>
@@ -32,13 +31,10 @@
                 <tr>
                     <th scope="row">{{$key +1}}</th>
                     <td>{{$list->name}}</td>
-                    <td>{{$list->email}}</td>
-                    <td>{{$list->phone}}</td>
-                    <td>{{$list->groups->name}}</td>
-                    <td><a href="{{route('admin.users.edit',$list->id)}}" class="btn btn-warning">Sửa</a></td>
-                    @if(Auth::user()->id!==$list->id)
-                    <td><a href="{{route('admin.users.delete',$list->id)}}" onclick="return confirm('Bạn có chắc chắn ?')" class="btn btn-danger">Xóa</a></td>
-                    @endif
+                    <td>{{!empty($list->postBy->name )? $list->postBy->name:false}}</td>
+                    <td><a href="{{route('admin.groups.edit',$list->id)}}" class="btn btn-success">phân quyền</a></td>
+                    <td><a href="{{route('admin.groups.edit',$list->id)}}" class="btn btn-warning">Sửa</a></td>
+                    <td><a href="{{route('admin.groups.delete',$list->id)}}" onclick="return confirm('Bạn có chắc chắn ?')" class="btn btn-danger">Xóa</a></td>
                 </tr>
                 @endforeach
             @endif

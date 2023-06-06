@@ -1,9 +1,19 @@
 @extends('admin.master')
-@section('title','Sửa người dùng')
+@section('title','Cập nhật người dùng')
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Sửa người dùng</h1>
 </div>
+@if ($errors->any())
+<div class="alert alert-danger text-center">
+    Vui lòng kiểm tra dữ liệu nhập vào
+</div>
+@endif
+@if(!empty(session('msg')))
+        <div class="alert alert-success text-center">
+            Cập nhật người dùng thành công
+        </div>
+    @endif
 <form action="{{route('admin.users.update',$user->id)}}" method="POST">
     @csrf
     <div class="row">
@@ -36,7 +46,7 @@
         </div>
         <div class="col-6">
             <div class="mb-3">
-                <label for="">Mật khẩu</label>
+                <label for="">Mật khẩu (Không nhập nếu không đổi)</label>
                 <input type="password" name="password" value="{{old('password')}}" class="form-control @error('password') is-invalid @enderror" id="" placeholder="Nhập mật khẩu...">
                 @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -88,7 +98,7 @@
 
         </div> --}}
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Lưu lại</button>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
             <a href="{{route('admin.users.index')}}" class="btn btn-danger">Hủy</a>
         </div>
 

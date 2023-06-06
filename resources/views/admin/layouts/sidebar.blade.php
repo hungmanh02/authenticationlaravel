@@ -53,8 +53,8 @@
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Nhóm người dùng:</h6>
-                <a class="collapse-item" href="{{route('admin.groups.index')}}">Danh sách nhóm người dùng</a>
-                <a class="collapse-item" href="{{route('admin.groups.add')}}">Thêm nhóm người dùng</a>
+                <a class="collapse-item" href="{{route('admin.groups.index')}}">Danh sách nhóm</a>
+                <a class="collapse-item" href="{{route('admin.groups.add')}}">Thêm nhóm</a>
             </div>
         </div>
     </li>
