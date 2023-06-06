@@ -161,9 +161,14 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 * groups
 - danh sách groups
-- phân quyền và CRUD trong groups
-- 
-
+- cột phân quyền và CRUD trong groups
+- thiết lập phân quyền
+- tạo 1 table permission rieng để click
+- insert table modules để tạo danh sách permission bằng db:seed
+- tạo model cho modules
+- tại controller tạo 1 mảng role
+- viết function checkbox ô phân quyền đã được chọn
+- thiết lập phân quyền
 
 
 

@@ -32,7 +32,7 @@
                     <th scope="row">{{$key +1}}</th>
                     <td>{{$list->name}}</td>
                     <td>{{!empty($list->postBy->name )? $list->postBy->name:false}}</td>
-                    <td><a href="{{route('admin.groups.edit',$list->id)}}" class="btn btn-success">phân quyền</a></td>
+                    <td><a href="{{route('admin.groups.permission',$list->id)}}" class="btn btn-success">phân quyền</a></td>
                     <td><a href="{{route('admin.groups.edit',$list->id)}}" class="btn btn-warning">Sửa</a></td>
                     <td><a href="{{route('admin.groups.delete',$list->id)}}" onclick="return confirm('Bạn có chắc chắn ?')" class="btn btn-danger">Xóa</a></td>
                 </tr>

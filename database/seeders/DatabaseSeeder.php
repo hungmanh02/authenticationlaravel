@@ -29,40 +29,40 @@ class DatabaseSeeder extends Seeder
         //     'password'=>Hash::make('123456'),
         //     'is_active'=>1
         // ]);
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        $groupId=DB::table('groups')->insertGetId([
-                'name' => 'Administrator',
-                'user_id'=>'0',
-                'created_at'=>date('Y-m-d H:i:s'),
-                'updated_at'=>date('Y-m-d H:i:s'),
-            ]);
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
-        if($groupId>0){
-            $userId=DB::table('users')->insertGetId([
-            'name' => 'Đỗ Hùng Mạnh',
-            'email'=>'domanh462@gmail.com',
-            'phone'=>'0376971481',
-            'password'=>Hash::make('123456789'),
-            'group_id'=>$groupId,
-            'user_id'=>0,
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s'),
-            ]);
-            if($userId>0){
-                for($i=1;$i<=10;$i++){
-                    DB::table('posts')->insert([
-                        'title' => Str::random(10),
-                        'description' => Str::random(100),
-                        'content' => Str::random(1000),
-                        'user_id' => $userId,
-                        'created_at'=>date('Y-m-d H:i:s'),
-                        'updated_at'=>date('Y-m-d H:i:s'),
-                    ]);
-                }
+        // DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        // $groupId=DB::table('groups')->insertGetId([
+        //         'name' => 'Administrator',
+        //         'user_id'=>'0',
+        //         'created_at'=>date('Y-m-d H:i:s'),
+        //         'updated_at'=>date('Y-m-d H:i:s'),
+        //     ]);
+        // DB::statement('SET FOREIGN_KEY_CHECKS=1');
+        // if($groupId>0){
+        //     $userId=DB::table('users')->insertGetId([
+        //     'name' => 'Đỗ Hùng Mạnh',
+        //     'email'=>'domanh462@gmail.com',
+        //     'phone'=>'0376971481',
+        //     'password'=>Hash::make('123456789'),
+        //     'group_id'=>$groupId,
+        //     'user_id'=>0,
+        //     'created_at'=>date('Y-m-d H:i:s'),
+        //     'updated_at'=>date('Y-m-d H:i:s'),
+        //     ]);
+        //     if($userId>0){
+        //         for($i=1;$i<=10;$i++){
+        //             DB::table('posts')->insert([
+        //                 'title' => Str::random(10),
+        //                 'description' => Str::random(100),
+        //                 'content' => Str::random(1000),
+        //                 'user_id' => $userId,
+        //                 'created_at'=>date('Y-m-d H:i:s'),
+        //                 'updated_at'=>date('Y-m-d H:i:s'),
+        //             ]);
+        //         }
 
-            }
+        //     }
 
-        }
+        // }
         // for($i=1;$i<=100;$i++){
         //     DB::table('posts')->insert([
         //         'name' => Str::random(10),
@@ -70,6 +70,26 @@ class DatabaseSeeder extends Seeder
         //         'user_id' => 1,
         //     ]);
         // }
+            DB::table('modules')->insert([
+                'name'=>'users',
+                'title'=>'Quản lý người dùng',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s'),
+            ]);
+            DB::table('modules')->insert([
+                'name'=>'groups',
+                'title'=>'Quản lý nhóm',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s'),
+            ]);
+            DB::table('modules')->insert([
+                'name'=>'posts',
+                'title'=>'Quản lý bài viết',
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s'),
+            ]);
+
+
 
     }
 }

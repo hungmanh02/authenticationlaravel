@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Group;
+use App\Models\Modules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -20,6 +21,36 @@ class GroupController extends Controller
     }
     public function add(){
         return view('admin.groups.add');
+    }
+    public function permission(Group $group){
+        $modules=Modules::all();
+        $roleListArr=[
+            'view'=>'Xem',
+            'add'=>'Thêm',
+            'edit'=>'Sửa',
+            'delete'=>'Xóa',
+        ];
+        $roleJson= $group->permissions;
+        if(!empty($roleJson)){
+            $roleArr=json_decode($roleJson,true);
+        }else{
+            $roleArr=[];
+        }
+        return view('admin.groups.permission',compact('group','modules','roleListArr','roleArr'));
+    }
+    public function postPermission(Group $group,Request $request){
+        if(!empty($request->role)){
+            $roleArr=$request->role;
+        }else{
+            $roleArr=[];
+        }
+         $roleJson=json_encode($roleArr);
+         $group->permissions=$roleJson;
+         $group->save();
+
+         return back()->with('msg','Phân quyền thành công !');
+
+
     }
     public function postAdd(Request $request){
         $request->validate(
