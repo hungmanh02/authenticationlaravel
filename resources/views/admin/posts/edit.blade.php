@@ -1,7 +1,7 @@
 @extends('admin.master')
-@section('title','Thêm bài viết')
+@section('title','Sửa bài viết')
 @section('content')
-<form action="{{route('admin.posts.add')}}" method="POST">
+<form action="{{route('admin.posts.edit',$post)}}" method="POST">
     @csrf
     <div class="row">
         <div class="col-6">
@@ -56,6 +56,18 @@
                 <label for="">Giá khuyến mãi</label>
                 <input type="number" name="sale_price" value="{{old('sale_price')}}" class="form-control @error('sale_price') is-invalid @enderror" id="" placeholder="Giá khuyến mãi...">
                 @error('sale_price')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="mb-3">
+                <label for="">Tài liệu đính kèm</label>
+                <select name="is_document" id="" class="form-select @error('is_document') is-invalid @enderror">
+                    <option value="0" {{ old('is_document')==0 ? 'selected':false;}}>Không</option>
+                    <option value="1" {{ old('is_document')==1 ? 'selected':false;}}>Có</option>
+                </select>
+                @error('is_document')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

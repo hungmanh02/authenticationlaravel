@@ -5,55 +5,33 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
     public function index(){
-        return view('admin.posts.list');
+        $lists=Post::all();
+        return view('admin.posts.list',compact('lists'));
     }
     public function show(Post $post){
         return "Chi tiết bài viết".$post;
     }
     public function add(){
-        $user=User::find(2);
-        if(Gate::forUser($user)->allows('posts.add')){
-            return 'Có quyền thêm bài viết';
-        }
-
-        // xứ lý logic cho phân quyền
-        // if(Gate::allows('posts.add')){
-        //     return 'Có quyền thêm bài viết';
-        // }
-        // if(Gate::denies('posts.add')){
-        //     return 'Không có quyền thêm bài viết';
-        // }
-        // return "Thêm bài viết";
+        return View('admin.posts.add');
     }
-    public function postAdd(){
-
-    }
-    public function postEdit(Post $post){
+    public function postAdd(Post $post){
         return $post;
     }
     public function edit(Post $post){
-        // $user=User::find(2);
-        // if(Gate::forUser($user)->allows('posts.update',$post)){
-        //     return 'Cho phép thêm bài viết ';
 
-        // }
-        // if(Gate::forUser($user)->denies('posts.update',$post)){
-        //     return 'Không cho phép thêm bài viết ';
-
-        // }
-        if(Gate::allows('posts.update',$post)){
-            return 'Cho phép sửa bài viết '.$post->id;
-        }
-        if(Gate::denies('posts.update',$post)){
-            return 'Không cho phép sửa bài viết '.$post->id;
-        }
+            return View('admin.posts.edit',compact('post'));
     }
+    public function postEdit(Post $post,Request $request){
+
+    }
+
     public function delete($id){
         return $id;
     }

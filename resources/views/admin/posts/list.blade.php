@@ -1,5 +1,45 @@
-<h2>Danh sách bài viết</h2>
-@can('posts.add')
-
-<a href="{{route('admin.posts.add')}}">Thêm bài viết</a>
-@endcan
+@extends('admin.master')
+@section('title','Danh sách bài viết')
+@section('content')
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Danh sách bài viết</h1>
+    </div>
+    @if(!empty(session('msg')))
+        <div class="alert alert-success text-center">
+           {{session('msg')}}
+        </div>
+    @endif
+    <div>
+        <p>
+            <a href="{{route('admin.posts.add')}}" class="btn btn-primary">Thêm mới</a>
+        </p>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th >#</th>
+            <th >title</th>
+            <th >description</th>
+            <th >Người viết bài</th>
+            <th width="5%" >Sửa</th>
+            <th width="5%" >Xóa</th>
+          </tr>
+        </thead>
+        <tbody>
+            @if ($lists->count()>0)
+                @foreach ($lists as $key=>$list)
+                <tr>
+                    <th scope="row">{{$key +1}}</th>
+                    <td>{{$list->title}}</td>
+                    <td>{{$list->description}}</td>
+                    <td>{{$list->user_id}}</td>
+                    <td><a href="{{route('admin.posts.edit',$list->id)}}" class="btn btn-warning">Sửa</a></td>
+                    @if(Auth::user()->id!==$list->id)
+                    <td><a href="{{route('admin.posts.delete',$list->id)}}" onclick="return confirm('Bạn có chắc chắn ?')" class="btn btn-danger">Xóa</a></td>
+                    @endif
+                </tr>
+                @endforeach
+            @endif
+        </tbody>
+      </table>
+@endsection
