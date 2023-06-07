@@ -36,6 +36,7 @@ class GroupController extends Controller
         }else{
             $roleArr=[];
         }
+        // dd($roleArr);
         return view('admin.groups.permission',compact('group','modules','roleListArr','roleArr'));
     }
     public function postPermission(Group $group,Request $request){

@@ -34,6 +34,7 @@
                                 @foreach ($roleListArr as $roleName =>$roleLabel)
                                 <div class="col-2">
                                     <label for="role_{{$module->name}}_{{$roleName}}">
+                                        {{--  dd($roleArr);  --}}
                                         <input type="checkbox" name="role[{{$module->name}}][]" id="role_{{$module->name}}_{{$roleName}}" value="{{$roleName}}"
                                             {{isRoleArrActiveBox($roleArr,$module->name,$roleName)? 'checked':false}}
                                         />
@@ -46,7 +47,7 @@
                             <div class="col-2">
                                 <label for="role_{{$module->name}}_permission">
                                     <input type="checkbox" name="role[{{$module->name}}][]" id="role_{{$module->name}}_permission" value="permission"
-                                    {{isRoleArrActiveBox($roleArr,$module->name,'permission')? 'checked':false}}
+                                    {{--  {{isRoleArrActiveBox($roleArr,$module->name,'permission')? 'checked':false}}  --}}
                                     />
                                     Phân quyền
                                 </label>
