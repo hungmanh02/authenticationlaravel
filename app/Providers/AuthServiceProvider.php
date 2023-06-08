@@ -4,6 +4,8 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\Group;
+use App\Models\Modules;
 use App\Models\Post;
 use App\Models\User;
 use App\Policies\PostPolicy;
@@ -34,16 +36,37 @@ class AuthServiceProvider extends ServiceProvider
         ResetPassword::createUrlUsing(function ($doctor, string $token) {
             return route('doctors.reset-password',['token'=>$token]).'?email='.$doctor->email;
         });
-        // định nghĩa gate
-        Gate::define('posts.add',function (User $user){
-            // dd($user);
-            return true;
-        });
-        Gate::define('posts.update',function(User $user,Post $post){
-            // dd($post);
-            return $user->id==$post->user_id;
-        });
+        // // định nghĩa gate
+        // Gate::define('posts.add',function (User $user){
+        //     // dd($user);
+        //     return true;
+        // });
+        // Gate::define('posts.update',function(User $user,Post $post){
+        //     // dd($post);
+        //     return $user->id==$post->user_id;
+        // });
         // sử dụng policy
         // Gate::define('posts.add',[PostPolicy::class,'add']);
+         /*
+            1. lấy dsnh sách modules
+         */
+        $moduleList=Modules::all();
+        if($moduleList->count()>0){
+
+            foreach($moduleList as $module){
+                Gate::define($module->name,function(User $user) use ($module){
+                        $roleJson= $user->groups->permissions;
+                        if(!empty($roleJson)){
+                            $roleArr=json_decode($roleJson,true);
+                            $check=isRoleArrActiveBox($roleArr,$module->name);
+                            return $check;
+                        }
+                        return false;
+                });
+            }
+        }
+       
+
+
     }
 }

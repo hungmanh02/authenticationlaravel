@@ -1,5 +1,6 @@
-@extends('errors::minimal')
+@extends('admin.master')
+@section('title','Danh sách người dùng')
+@section('content')
+    <h1 class="text-center">Không có quyền truy cập</h1>
 
-@section('title', __('Forbidden'))
-@section('code', '403')
-@section('message', __($exception->getMessage() ?: 'Forbidden'))
+@endsection

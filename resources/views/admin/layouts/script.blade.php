@@ -14,3 +14,4 @@
 <!-- Page level custom scripts -->
 <script src="{{asset('Dashboard/Admin/js/demo/chart-area-demo.js')}}"></script>
 <script src="{{asset('Dashboard/Admin/js/demo/chart-pie-demo.js')}}"></script>
+<script src="{{asset('ckeditor/ckeditor.js')}}"></script>

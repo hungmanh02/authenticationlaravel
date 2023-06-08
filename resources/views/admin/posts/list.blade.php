@@ -9,6 +9,11 @@
            {{session('msg')}}
         </div>
     @endif
+    @if(!empty(session('fail')))
+        <div class="alert alert-success text-center">
+           {{session('fail')}}
+        </div>
+    @endif
     <div>
         <p>
             <a href="{{route('admin.posts.add')}}" class="btn btn-primary">Thêm mới</a>
@@ -31,12 +36,10 @@
                 <tr>
                     <th scope="row">{{$key +1}}</th>
                     <td>{{$list->title}}</td>
-                    <td>{{$list->description}}</td>
-                    <td>{{$list->user_id}}</td>
+                    <td>{!!$list->description!!}</td>
+                    <td>{{$list->user->name}}</td>
                     <td><a href="{{route('admin.posts.edit',$list->id)}}" class="btn btn-warning">Sửa</a></td>
-                    @if(Auth::user()->id!==$list->id)
                     <td><a href="{{route('admin.posts.delete',$list->id)}}" onclick="return confirm('Bạn có chắc chắn ?')" class="btn btn-danger">Xóa</a></td>
-                    @endif
                 </tr>
                 @endforeach
             @endif

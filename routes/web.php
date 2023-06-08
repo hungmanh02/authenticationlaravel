@@ -8,6 +8,7 @@ use App\Http\Controllers\Doctors\Auth\ForgotPasswordController;
 use App\Http\Controllers\Doctors\Auth\LoginController;
 use App\Http\Controllers\Doctors\Auth\ResetPasswordController;
 use App\Http\Controllers\Doctors\IndexController;
+use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ Auth::routes();
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
     Route::get('/',[AdminController::class,'index']);
     // users
-    Route::prefix('users')->name('users.')->group(function(){
+    Route::prefix('users')->name('users.')->middleware('can:users')->group(function(){
         Route::get('/',[UsersController::class,'index'])->name('index');
         Route::get('/add',[UsersController::class,'add'])->name('add');
         Route::post('/add',[UsersController::class,'postAdd'])->name('add');
@@ -43,7 +44,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
         Route::get('/delete/{user}',[UsersController::class,'delete'])->name('delete');
     });
     //groups
-    Route::prefix('groups')->name('groups.')->group(function(){
+    Route::prefix('groups')->name('groups.')->middleware('can:groups')->group(function(){
         Route::get('/',[GroupController::class,'index'])->name('index');
         Route::get('/add',[GroupController::class,'add'])->name('add');
         Route::post('/add',[GroupController::class,'postadd'])->name('add');
@@ -55,7 +56,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
         Route::post('/permission/{group}',[GroupController::class,'postPermission'])->name('permission');
     });
     //posts
-    Route::prefix('posts')->name('posts.')->group(function(){
+    Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function(){
         Route::get('/',[PostController::class,'index'])->name('index');
         Route::get('/add',[PostController::class,'add'])->name('add');//->middleware('can:posts.add')
         Route::post('/add',[PostController::class,'postAdd'])->name('add');//->middleware('can:posts.add')

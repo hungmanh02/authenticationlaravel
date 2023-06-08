@@ -27,6 +27,7 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
+    @can('users')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
@@ -41,8 +42,11 @@
             </div>
         </div>
     </li>
+    @endcan
+    
 
     <!-- Nav Item - Utilities Collapse Menu -->
+    @can('groups')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
@@ -58,7 +62,10 @@
             </div>
         </div>
     </li>
+    @endcan
+    
     <!-- Nav Item - Posts Collapse Menu -->
+    @can('posts')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePosts"
             aria-expanded="true" aria-controls="collapsePosts">
@@ -74,6 +81,8 @@
             </div>
         </div>
     </li>
+    @endcan
+    
 
     {{-- <!-- Divider -->
     <hr class="sidebar-divider"> // đường gạch nganh--}}

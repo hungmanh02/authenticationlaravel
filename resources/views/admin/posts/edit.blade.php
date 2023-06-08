@@ -1,151 +1,70 @@
 @extends('admin.master')
-@section('title','Sửa bài viết')
+@section('title','Thêm bài viết')
 @section('content')
+@if ($errors->any())
+<div class="alert alert-danger text-center">
+    Vui lòng kiểm tra dữ liệu nhập vào
+</div>
+@endif
+@if(!empty(session('msg')))
+        <div class="alert alert-success text-center">
+           {{session('msg')}}
+        </div>
+    @endif
+    @if(!empty(session('fail')))
+        <div class="alert alert-success text-center">
+           {{session('fail')}}
+        </div>
+    @endif
 <form action="{{route('admin.posts.edit',$post)}}" method="POST">
     @csrf
     <div class="row">
         <div class="col-6">
             <div class="mb-3">
-                <label for="">Tên</label>
-                <input type="text" name="name" value="{{ old('name')}}" class="form-control title @error('name') is-invalid @enderror" id="" placeholder="Tên...">
-                @error('name')
+                <label for="">Tiêu đề bài viết</label>
+                <input type="text" name="title" value="{{ old('title') ?? $post->title}}" class="form-control title @error('title') is-invalid @enderror" id="" placeholder="Tiêu đề bài viết...">
+                @error('title')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
         </div>
         <div class="col-6">
             <div class="mb-3">
-                <label for="">Đường link</label>
-                <input type="text" name="slug" value="{{ old('slug')}}" class="form-control slug @error('slug') is-invalid @enderror" id="" placeholder="Slug...">
-                @error('slug')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="mb-3">
-                <label for="">Chọn giảng viên</label>
-                <select name="teacher_id" id="" class="form-select @error('teacher_id') is-invalid @enderror">
-                    <option value="0">Chọn giảng viên</option>
+                <label for="">Chọn người đăng bài</label>
+                <select name="user_id" id="" class="form-control @error('user_id') is-invalid @enderror">
+                    <option value="0">Chọn người đăng bài</option>
+                    @foreach ($users as $user)
+                    <option value="{{$user->id}}" {{ old('user_id')==$user->id || $post->user_id ==$user->id ? 'selected':false;}}>{{$user->name}}</option>
+                    @endforeach
                 </select>
-                @error('teacher_id')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="mb-3">
-                <label for="">Mã khóa học</label>
-                <input type="text" name="code" value="{{old('code')}}" class="form-control @error('code') is-invalid @enderror" id="" placeholder="Mã khóa học...">
-                @error('code')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="mb-3">
-                <label for="">Giá khóa học</label>
-                <input type="number" name="price" value="{{old('price')}}" class="form-control @error('price') is-invalid @enderror" id="" placeholder="Giá khóa học...">
-                @error('price')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="mb-3">
-                <label for="">Giá khuyến mãi</label>
-                <input type="number" name="sale_price" value="{{old('sale_price')}}" class="form-control @error('sale_price') is-invalid @enderror" id="" placeholder="Giá khuyến mãi...">
-                @error('sale_price')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="mb-3">
-                <label for="">Tài liệu đính kèm</label>
-                <select name="is_document" id="" class="form-select @error('is_document') is-invalid @enderror">
-                    <option value="0" {{ old('is_document')==0 ? 'selected':false;}}>Không</option>
-                    <option value="1" {{ old('is_document')==1 ? 'selected':false;}}>Có</option>
-                </select>
-                @error('is_document')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="mb-3">
-                <label for="">Trạng thái</label>
-                <select name="status" id="" class="form-select @error('status') is-invalid @enderror">
-                    <option value="0" {{ old('status')==0 ? 'selected':false;}}>Chưa ra mắt</option>
-                    <option value="1" {{ old('status')==1 ? 'selected':false;}}>Đã ra mắt</option>
-                </select>
-                @error('status')
+                @error('user_id')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
         </div>
         <div class="col-12">
             <div class="mb-3">
-                <div class="row  {{$errors->has('thumbnail')? 'align-items-center':'align-items-end'}}">
-                    <div class="col-7">
-                        <label for="">Ảnh đại diện</label>
-                        <input type="text" id="thumbnail"  readonly name="thumbnail" value="{{old('thumbnail')}}" class="form-control {{$errors->has('thumbnail')? 'is-invalid':''}}" id=""
-                        placeholder="Ảnh đại diện...">
-                        @error('thumbnail')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="col-2 d-grid">
-                        <button type="button"  class="btn btn-primary" id="lfm" data-input="thumbnail"
-                        data-preview="holder">
-                            <i class="fa fa-save"></i> Chọn ảnh
-                        </button>
-                    </div>
-                    <div class="col-3">
-                        <div id="holder">
-                            @if (old('thumbnail'))
-                            <img src="{{old('thumbnail')}}" alt="">
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-12">
-            <div class="mb-3">
-                <label for="">Nội dung</label>
-                <textarea name="detail" class="form-control ckeditor @error('detail') is-invalid @enderror"
-                 placeholder="Nội dung ...">
-                 {{ old('detail')}}
+                <label for="">Diễn giải bài viết</label>
+                <textarea name="description" class="form-control ckeditor @error('description') is-invalid @enderror"
+                 placeholder="Diễn giải bài viết ...">
+                 {{ old('description') ?? $post->description}}
                 </textarea>
-                @error('detail')
+                @error('description')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
         </div>
         <div class="col-12">
             <div class="mb-3">
-                <label for="">Hỗ trợ</label>
-                <textarea name="supports" class="form-control  ckeditor @error('supports') is-invalid @enderror"
-                 placeholder="Hỗ trợ ...">
-                 {{ old('supports')}}
+                <label for="">Nội dung bài viết</label>
+                <textarea name="content" class="form-control  ckeditor @error('content') is-invalid @enderror"
+                 placeholder="Nội dung bài viết ...">
+                 {{ old('content') ?? $post->content}}
                 </textarea>
-                @error('supports')
+                @error('content')
                  <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
 
-            </div>
-        </div>
-        <div class="col-12">
-            <div class="mb-3">
-                <label for="">Chuyên mục</label>
-                <div class="list-categories">
-                    {{--  {{getCategoriesCheckbox($categories,old('categories'))}}  --}}
-                </div>
-                    @error('categories')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
             </div>
         </div>
         <div class="col-12">

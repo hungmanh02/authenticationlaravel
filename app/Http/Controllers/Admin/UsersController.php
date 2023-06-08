@@ -50,7 +50,6 @@ class UsersController extends Controller
                 'phone.max'=>'Số điện thoại không quá :max ký tự',
             ]
         );
-        // $time = Carbon::now('Asia/Ho_Chi_Minh');
 
         $user= new User();
         $user->name=$request->name;

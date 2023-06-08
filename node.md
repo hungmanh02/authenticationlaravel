@@ -169,6 +169,10 @@ MAIL_FROM_NAME="${APP_NAME}"
 - tại controller tạo 1 mảng role
 - viết function checkbox ô phân quyền đã được chọn
 - thiết lập phân quyền
+* post
+ 1. Thiết lập Gate: cho phép truy cập vaog Controller
+
+ 2. Thiết lập Policy:Ứng vơi mỗi model
 
 
 
