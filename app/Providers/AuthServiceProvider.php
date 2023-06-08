@@ -21,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Post::class => PostPolicy::class,
     ];
 
     /**
@@ -62,6 +62,15 @@ class AuthServiceProvider extends ServiceProvider
                             return $check;
                         }
                         return false;
+                });
+                Gate::define($module->name.'.edit',function(User $user) use ($module){
+                    $roleJson= $user->groups->permissions;
+                    if(!empty($roleJson)){
+                        $roleArr=json_decode($roleJson,true);
+                        $check=isRoleArrActiveBox($roleArr,$module->name,'edit');
+                        return $check;
+                    }
+                    return false;
                 });
             }
         }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Doctors\Auth\ForgotPasswordController;
 use App\Http\Controllers\Doctors\Auth\LoginController;
 use App\Http\Controllers\Doctors\Auth\ResetPasswordController;
 use App\Http\Controllers\Doctors\IndexController;
+use App\Models\Post;
 use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -57,11 +58,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
     });
     //posts
     Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function(){
-        Route::get('/',[PostController::class,'index'])->name('index');
-        Route::get('/add',[PostController::class,'add'])->name('add');//->middleware('can:posts.add')
-        Route::post('/add',[PostController::class,'postAdd'])->name('add');//->middleware('can:posts.add')
+        Route::get('/',[PostController::class,'index'])->name('index')->can('viewAny',Post::class);
+        Route::get('/add',[PostController::class,'add'])->name('add')->can('create',Post::class);//->middleware('can:posts.add')
+        Route::post('/add',[PostController::class,'postAdd'])->name('add')->can('create',Post::class);//->middleware('can:posts.add')
         Route::get('/show/{id}',[PostController::class,'show'])->name('show');
-        Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit');//->middleware('can:posts.update,post')
+        Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->can('posts.edit');//->middleware('can:posts.update,post')
         Route::post('/edit/{post}',[PostController::class,'postEdit'])->name('edit');//->middleware('can:posts.update,post')
         Route::get('/delete/{post}',[PostController::class,'delete'])->name('delete');
     });

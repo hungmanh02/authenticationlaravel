@@ -171,8 +171,9 @@ MAIL_FROM_NAME="${APP_NAME}"
 - thiết lập phân quyền
 * post
  1. Thiết lập Gate: cho phép truy cập vaog Controller
-
+- 
  2. Thiết lập Policy:Ứng vơi mỗi model
+- 
 
 
 

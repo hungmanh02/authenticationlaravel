@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Gate;
 class PostController extends Controller
 {
     public function index(){
-        $lists=Post::all();
+        // $this->authorize('viewAny',Post::class);
+        $userId=Auth::user()->id;
+        $lists=Post::orderBy('created_at','desc')
+        ->where('user_id',$userId)
+        ->get();
         return view('admin.posts.list',compact('lists'));
     }
     public function show(Post $post){
@@ -47,10 +51,13 @@ class PostController extends Controller
          return redirect()->route('admin.posts.index')->with('msg','Thêm bài viết thành công !');
     }
     public function edit(Post $post){
+            $this->authorize('update',$post);
             $users=User::all(['name','id']);
             return View('admin.posts.edit',compact('post','users'));
     }
     public function postEdit(Post $post,Request $request){
+        $this->authorize('update',$post);
+
         $request->validate(
             [
                     'title' =>'required|max:100',
