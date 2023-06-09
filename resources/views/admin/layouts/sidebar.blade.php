@@ -38,12 +38,14 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Người dung:</h6>
                 <a class="collapse-item" href="{{route('admin.users.index')}}">Danh sách người dùng</a>
+                @can('create','App\\Models\User')
                 <a class="collapse-item" href="{{route('admin.users.add')}}">Thêm người dùng</a>
+                @endcan
             </div>
         </div>
     </li>
     @endcan
-    
+
 
     <!-- Nav Item - Utilities Collapse Menu -->
     @can('groups')
@@ -58,12 +60,14 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Nhóm người dùng:</h6>
                 <a class="collapse-item" href="{{route('admin.groups.index')}}">Danh sách nhóm</a>
+                @can('create','App\\Models\Group')
                 <a class="collapse-item" href="{{route('admin.groups.add')}}">Thêm nhóm</a>
+                @endcan
             </div>
         </div>
     </li>
     @endcan
-    
+
     <!-- Nav Item - Posts Collapse Menu -->
     @can('posts')
     <li class="nav-item">
@@ -77,12 +81,14 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Bài viết:</h6>
                 <a class="collapse-item" href="{{route('admin.posts.index')}}">Danh sách bài viết</a>
+                @can('create','App\\Models\Post')
                 <a class="collapse-item" href="{{route('admin.posts.add')}}">Thêm bài viết</a>
+                @endcan
             </div>
         </div>
     </li>
     @endcan
-    
+
 
     {{-- <!-- Divider -->
     <hr class="sidebar-divider"> // đường gạch nganh--}}

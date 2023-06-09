@@ -10,9 +10,11 @@
         </div>
     @endif
     <div>
+        @can('create','App\\Models\User')
         <p>
             <a href="{{route('admin.users.add')}}" class="btn btn-primary">Thêm mới</a>
         </p>
+        @endcan
     </div>
     <table class="table table-bordered">
         <thead>
@@ -22,8 +24,12 @@
             <th >Email</th>
             <th >Phone</th>
             <th >Nhóm</th>
+            @can('users.edit')
             <th width="5%" >Sửa</th>
+            @endcan
+            @can('users.delete')
             <th width="5%" >Xóa</th>
+            @endcan
           </tr>
         </thead>
         <tbody>
@@ -35,10 +41,14 @@
                     <td>{{$list->email}}</td>
                     <td>{{$list->phone}}</td>
                     <td>{{$list->groups->name}}</td>
+                    @can('users.edit')
                     <td><a href="{{route('admin.users.edit',$list->id)}}" class="btn btn-warning">Sửa</a></td>
+                    @endcan
+                    @can('users.delete')
                     @if(Auth::user()->id!==$list->id)
                     <td><a href="{{route('admin.users.delete',$list->id)}}" onclick="return confirm('Bạn có chắc chắn ?')" class="btn btn-danger">Xóa</a></td>
                     @endif
+                    @endcan
                 </tr>
                 @endforeach
             @endif

@@ -28,8 +28,12 @@
             <th >title</th>
             <th >description</th>
             <th >Người viết bài</th>
+            @can('posts.edit')
             <th width="5%" >Sửa</th>
+            @endcan
+            @can('posts.delete')
             <th width="5%" >Xóa</th>
+            @endcan
           </tr>
         </thead>
         <tbody>
@@ -40,8 +44,12 @@
                     <td>{{$list->title}}</td>
                     <td>{!!$list->description!!}</td>
                     <td>{{$list->user->name}}</td>
+                    @can('posts.edit')
                     <td><a href="{{route('admin.posts.edit',$list->id)}}" class="btn btn-warning">Sửa</a></td>
+                    @endcan
+                    @can('posts.delete')
                     <td><a href="{{route('admin.posts.delete',$list->id)}}" onclick="return confirm('Bạn có chắc chắn ?')" class="btn btn-danger">Xóa</a></td>
+                    @endcan
                 </tr>
                 @endforeach
             @endif

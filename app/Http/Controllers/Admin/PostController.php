@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Gate;
 class PostController extends Controller
 {
     public function index(){
-        // $this->authorize('viewAny',Post::class);
         $userId=Auth::user()->id;
         $lists=Post::orderBy('created_at','desc')
         ->where('user_id',$userId)
@@ -24,9 +23,11 @@ class PostController extends Controller
         return "Chi tiết bài viết".$post;
     }
     public function add(){
+        $this->authorize('add');
         return View('admin.posts.add');
     }
     public function postAdd(Request $request){
+        $this->authorize('add');
         $request->validate(
             [
                     'title' =>'required|max:100',
@@ -88,7 +89,10 @@ class PostController extends Controller
     }
 
     public function delete(Post $post){
-        Post::destroy($post->id);
+        $this->authorize('delete',$post);
+        if($post->count()>0){
+            Post::destroy($post->id);
+        }
         return redirect()->route('admin.posts.index')->with('msg','Xóa thành công bài viết !');
     }
 }

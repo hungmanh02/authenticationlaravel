@@ -14,7 +14,12 @@ use Illuminate\Support\Facades\Hash;
 class UsersController extends Controller
 {
     public function index(){
-        $lists=User::all();
+        $userId=Auth::user()->id;
+        if(Auth::user()->user_id==0){
+         $lists=User::all();
+        }else{
+            $lists=User::where('user_id',$userId)->get();
+        }
         return view('admin.users.list',compact('lists'));
     }
     public function show(User $user){
@@ -55,6 +60,7 @@ class UsersController extends Controller
         $user->name=$request->name;
         $user->email=$request->email;
         $user->phone=$request->phone;
+        $user->user_id=Auth::id();
         $user->group_id=$request->group_id;
         $user->password=Hash::make($request->password);
         $user->save();
@@ -76,12 +82,13 @@ class UsersController extends Controller
         // if(Gate::denies('users.update',$user)){
         //     return 'Không cho phép sửa bài viết '.$user->id;
         // }
-
+        $this->authorize('update',$user);
         $groups=Group::all(['id','name']);
         return view('admin.users.edit',compact('user','groups'));
     }
 
     public function postEdit(User $user,Request $request){
+        $this->authorize('update',$user);
         $request->validate(
             [
                     'name' =>'required|max:255',
@@ -117,6 +124,7 @@ class UsersController extends Controller
 
     }
     public function delete(User $user){
+        $this->authorize('delete',$user);
         if(Auth::user()->id!== $user->id){
             //xử lý xóa
             User::destroy($user->id);

@@ -10,9 +10,11 @@
         </div>
     @endif
     <div>
+        @can('groups.add')
         <p>
             <a href="{{route('admin.groups.add')}}" class="btn btn-primary">Thêm mới</a>
         </p>
+        @endcan
     </div>
     <table class="table table-bordered">
         <thead>

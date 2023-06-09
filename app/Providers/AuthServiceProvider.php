@@ -9,6 +9,7 @@ use App\Models\Modules;
 use App\Models\Post;
 use App\Models\User;
 use App\Policies\PostPolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -22,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Post::class => PostPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**
@@ -72,9 +74,19 @@ class AuthServiceProvider extends ServiceProvider
                     }
                     return false;
                 });
+                Gate::define($module->name.'.delete',function(User $user) use ($module){
+                    $roleJson= $user->groups->permissions;
+                    if(!empty($roleJson)){
+                        $roleArr=json_decode($roleJson,true);
+                        $check=isRoleArrActiveBox($roleArr,$module->name,'delete');
+                        return $check;
+                    }
+                    return false;
+                });
+
             }
         }
-       
+
 
 
     }

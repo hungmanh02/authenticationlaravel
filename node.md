@@ -173,7 +173,9 @@ MAIL_FROM_NAME="${APP_NAME}"
  1. Thiết lập Gate: cho phép truy cập vaog Controller
 - 
  2. Thiết lập Policy:Ứng vơi mỗi model
-- 
+- Post
+- User
+- Group
 
 
 

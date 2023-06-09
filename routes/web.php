@@ -9,6 +9,7 @@ use App\Http\Controllers\Doctors\Auth\LoginController;
 use App\Http\Controllers\Doctors\Auth\ResetPasswordController;
 use App\Http\Controllers\Doctors\IndexController;
 use App\Models\Post;
+use App\Models\User;
 use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -37,12 +38,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
     // users
     Route::prefix('users')->name('users.')->middleware('can:users')->group(function(){
         Route::get('/',[UsersController::class,'index'])->name('index');
-        Route::get('/add',[UsersController::class,'add'])->name('add');
-        Route::post('/add',[UsersController::class,'postAdd'])->name('add');
+        Route::get('/add',[UsersController::class,'add'])->name('add')->can('create',User::class);
+        Route::post('/add',[UsersController::class,'postAdd'])->name('add')->can('create',User::class);
         Route::get('/show/{user}',[UsersController::class,'show'])->name('show');
-        Route::get('/edit/{user}',[UsersController::class,'edit'])->name('edit');
-        Route::post('/edit/{user}',[UsersController::class,'postEdit'])->name('update');
-        Route::get('/delete/{user}',[UsersController::class,'delete'])->name('delete');
+        Route::get('/edit/{user}',[UsersController::class,'edit'])->name('edit')->can('users.edit');
+        Route::post('/edit/{user}',[UsersController::class,'postEdit'])->name('update')->can('users.edit');
+        Route::get('/delete/{user}',[UsersController::class,'delete'])->name('delete')->can('users.delete');
     });
     //groups
     Route::prefix('groups')->name('groups.')->middleware('can:groups')->group(function(){
@@ -58,13 +59,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function (){
     });
     //posts
     Route::prefix('posts')->name('posts.')->middleware('can:posts')->group(function(){
-        Route::get('/',[PostController::class,'index'])->name('index')->can('viewAny',Post::class);
+        Route::get('/',[PostController::class,'index'])->name('index');
         Route::get('/add',[PostController::class,'add'])->name('add')->can('create',Post::class);//->middleware('can:posts.add')
         Route::post('/add',[PostController::class,'postAdd'])->name('add')->can('create',Post::class);//->middleware('can:posts.add')
         Route::get('/show/{id}',[PostController::class,'show'])->name('show');
         Route::get('/edit/{post}',[PostController::class,'edit'])->name('edit')->can('posts.edit');//->middleware('can:posts.update,post')
-        Route::post('/edit/{post}',[PostController::class,'postEdit'])->name('edit');//->middleware('can:posts.update,post')
-        Route::get('/delete/{post}',[PostController::class,'delete'])->name('delete');
+        Route::post('/edit/{post}',[PostController::class,'postEdit'])->name('edit')->can('posts.edit');//->middleware('can:posts.update,post')
+        Route::get('/delete/{post}',[PostController::class,'delete'])->name('delete')->can('posts.delete');
     });
 
 
